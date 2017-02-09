@@ -84,7 +84,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             if (result.isSuccess()) {
 
             GoogleSignInAccount acct = result.getSignInAccount();
-
+//jkjhkj
             Log.e(TAG, "display name: " + acct.getDisplayName());
             //TODO:check for account image if no image is available application crashes
             String personName = acct.getDisplayName();
