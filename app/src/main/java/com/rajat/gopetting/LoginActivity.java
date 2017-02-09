@@ -42,11 +42,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         mProgressDialog.setIndeterminate(false);
         mProgressDialog.setMessage("Verifying..Please Wait..");
         myPrefernces = new MyPrefernces(this);
-        if(myPrefernces.checkLogIN()){
-            startActivity(new Intent(this,MainActivity.class));
+        if (myPrefernces.checkLogIN()) {
+            startActivity(new Intent(this, MainActivity.class));
             finish();
-        }
-        else {
+        } else {
             GoogleSignInOptions mGoogleSignInOption = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                     .requestEmail()
                     .build();
@@ -64,6 +63,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
                     startActivityForResult(signInIntent, RC_SIGN_IN);
 
+
                 }
             });
         }
@@ -74,14 +74,16 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+
             handleSignInResult(result);
-            mProgressDialog.show();
+
         }
     }
+
     private void handleSignInResult(GoogleSignInResult result) {
         Log.d(TAG, "handleSignInResult:" + result.isSuccess());
-        mProgressDialog.dismiss();
-            if (result.isSuccess()) {
+
+        if (result.isSuccess()) {
 
             GoogleSignInAccount acct = result.getSignInAccount();
 //jkjhkj
@@ -93,16 +95,17 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
 
             myPrefernces.setLogIn(true);
-            startActivity(new Intent(this,MainActivity.class));
+            startActivity(new Intent(this, MainActivity.class));
             finish();
         } else {
-            Toast.makeText(LoginActivity.this,"Login Failed",Toast.LENGTH_LONG).show();
+            Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_LONG).show();
         }
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Toast.makeText(LoginActivity.this,"Connection Failure",Toast.LENGTH_LONG).show();
+//        mProgressDialog.dismiss();
+        Toast.makeText(LoginActivity.this, "Connection Failure", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -120,10 +123,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             // this asynchronous branch will attempt to sign in the user silently.  Cross-device
             // single sign-on will occur in this branch.
 //            showProgressDialog();
+            mProgressDialog.show();
             opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
                 @Override
                 public void onResult(GoogleSignInResult googleSignInResult) {
 //                    hideProgressDialog();
+                    mProgressDialog.dismiss();
                     handleSignInResult(googleSignInResult);
                 }
             });

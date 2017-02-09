@@ -149,7 +149,10 @@ public class MainActivity extends AppCompatActivity implements ResponseInterface
 
         }
         if (id == R.id.logout) {
-
+            myDatabaseAdapter.dropTable();
+            myPrefernces.clearSession();
+            //TODO: reovoke session
+            startActivity(new Intent(this, MainActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }
