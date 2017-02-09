@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardCornerRadius="4dp"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/network_image"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_margin="@dimen/padding" />
+
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/padding"
+                android:layout_marginStart="@dimen/padding"
+                android:layout_marginTop="@dimen/padding"
+                android:text="aasd asdas adfasd asd asdjasd asdjasd asdjasd asdas d"
+                android:layout_toStartOf="@+id/time"
+                android:layout_toLeftOf="@+id/time"
+                android:textColor="@android:color/black"
+
+             />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/start_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="@dimen/padding"
+                android:layout_marginLeft="@dimen/padding"
+                android:text=" 23 hui d212"
+                android:textSize="12sp"
+                android:layout_marginTop="@dimen/padding" />
+
+        <TextView
+                android:id="@+id/end_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="@dimen/padding"
+                android:layout_marginRight="@dimen/padding"
+                android:text=" 23 hui d212"
+                android:textSize="12sp"
+                android:layout_marginTop="@dimen/padding" />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_add"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="@dimen/padding"
+            android:text="Add"
+            android:textAllCaps="false" />
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>

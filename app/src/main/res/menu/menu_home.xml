@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/action_notifications"
+        android:title="Notifications"
+        android:icon="@drawable/ic_menu_notifications"
+        app:showAsAction="always"/>
+    <item
+        android:title="logout"
+        app:showAsAction="never"
+        android:id="@+id/logout"></item>
+</menu>
