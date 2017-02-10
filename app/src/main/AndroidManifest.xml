@@ -13,7 +13,7 @@
 
         </activity>
         <activity android:name=".LoginActivity"
-            android:label="Login"
+            android:label="GoPetting"
             android:theme="@style/NoActionBarTheme"
             >
             <intent-filter>

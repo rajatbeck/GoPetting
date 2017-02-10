@@ -3,6 +3,7 @@ package com.rajat.gopetting;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.LayerDrawable;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -15,6 +16,13 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,7 +30,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements ResponseInterface, RecyclerViewAdapter.ONClickButton {
+public class MainActivity extends AppCompatActivity implements ResponseInterface, RecyclerViewAdapter.ONClickButton, GoogleApiClient.OnConnectionFailedListener {
 
     private static final String TAG = "MAIN_ACTIVITY";
     private static int mNotificationsCount = 0;
@@ -33,6 +41,8 @@ public class MainActivity extends AppCompatActivity implements ResponseInterface
     private MyDatabaseAdapter myDatabaseAdapter;
     private int FLAG_CHECK = 0;
     private MyPrefernces myPrefernces;
+    private GoogleApiClient mGoogleApiClient;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +53,14 @@ public class MainActivity extends AppCompatActivity implements ResponseInterface
         /*SQLiteDatabase sqLiteDatabase = myDatabaseAdapter.productDatabase.getWritableDatabase();
         myDatabaseAdapter.productDatabase.onCreate(sqLiteDatabase);*/
         myPrefernces = new MyPrefernces(this);
+        GoogleSignInOptions mGoogleSignInOption = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, mGoogleSignInOption)
+                .build();
         initailze();
 
     }
@@ -149,10 +167,11 @@ public class MainActivity extends AppCompatActivity implements ResponseInterface
 
         }
         if (id == R.id.logout) {
-            myDatabaseAdapter.dropTable();
+           /* myDatabaseAdapter.dropTable();
             myPrefernces.clearSession();
             //TODO: reovoke session
-            startActivity(new Intent(this, MainActivity.class));
+            startActivity(new Intent(this, MainActivity.class));*/
+            signOut();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -189,10 +208,33 @@ public class MainActivity extends AppCompatActivity implements ResponseInterface
         Log.d(TAG, "on Destroy called");
     }
 
+    private void signOut() {
+        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+                new ResultCallback<Status>() {
+                    @Override
+                    public void onResult(Status status) {
+                        // ...
+                        if (status.getStatus().isSuccess()) {
+                            myDatabaseAdapter.dropTable();
+                            myPrefernces.clearSession();
+                            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                            finish();
+                        }
+                        Log.d(TAG, String.valueOf(status.getStatus()));
+                    }
+                });
+    }
+
+
     @Override
     protected void onRestart() {
         super.onRestart();
         Log.d(TAG, "on Restart called");
         initailze();
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
 }

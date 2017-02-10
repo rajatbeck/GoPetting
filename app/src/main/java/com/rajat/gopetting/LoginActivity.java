@@ -90,7 +90,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             Log.e(TAG, "display name: " + acct.getDisplayName());
             //TODO:check for account image if no image is available application crashes
             String personName = acct.getDisplayName();
-            String personPhotoUrl = acct.getPhotoUrl().toString();
+//            String personPhotoUrl = acct.getPhotoUrl().toString();
             String email = acct.getEmail();
 
 
